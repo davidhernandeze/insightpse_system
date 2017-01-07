@@ -38,6 +38,22 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('profile_type') ? ' has-error' : '' }}">
+                            <label for="profile_type" class="col-md-4 control-label">Tipo de usuario</label>
+
+                            <div class="col-md-6">
+                                {{ Form::select('profile_type',
+                                 [ 'professional' => 'Profesional', 'assistant' => 'Asistente'],
+                                  null, ['placeholder' => 'Seleccione...', 'class' => 'form-control', 'required']) }}
+
+                                @if ($errors->has('profile_type'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('profile_type') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">Password</label>
 

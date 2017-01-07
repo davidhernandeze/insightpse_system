@@ -10,6 +10,7 @@
 
     <!-- Core CSS - Include with every page -->
     <link href="{{asset('plugins/bootstrap/bootstrap.css')}}" rel="stylesheet"/>
+    <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet"/>
     <link href="{{asset('font-awesome/css/font-awesome.css')}}" rel="stylesheet"/>
     <link href="{{asset('plugins/pace/pace-theme-big-counter.css')}}" rel="stylesheet"/>
     <link href="{{asset('css/style.css')}}" rel="stylesheet"/>
@@ -52,12 +53,12 @@
                 </a>
                 <!-- dropdown user-->
                 <ul class="dropdown-menu dropdown-user">
-                    <li><a href="#"><i class="fa fa-user fa-fw"></i>User Profile</a>
-                    </li>
-                    <li><a href="#"><i class="fa fa-gear fa-fw"></i>Settings</a>
-                    </li>
+                    {{--<li><a href="#"><i class="fa fa-user fa-fw"></i>User Profile</a>--}}
+                    {{--</li>--}}
+                    {{--<li><a href="#"><i class="fa fa-gear fa-fw"></i>Settings</a>--}}
+                    {{--</li>--}}
                     <li class="divider"></li>
-                    <li><a href="../../../../bs-siminta-admin/login.html"><i class="fa fa-sign-out fa-fw"></i>Logout</a>
+                    <li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out fa-fw"></i>Logout</a>
                     </li>
                 </ul>
                 <!-- end dropdown-user -->
@@ -82,9 +83,9 @@
                             <img src="{{asset('img/user.jpg')}}" alt="">
                         </div>
                         <div class="user-info">
-                            <div>Jonny <strong>Deen</strong></div>
+                            <div>{{Auth::user()->name}}</div>
                             <div class="user-text-online">
-                                <span class="user-circle-online btn btn-success btn-circle "></span>&nbsp;Online
+                                <span class="user-circle-online btn btn-success btn-circle "></span>&nbsp;En linea
                             </div>
                         </div>
                     </div>
@@ -97,14 +98,16 @@
                 </li>
 
                 <li>
-                    <a href="{{asset('assets/timeline.html')}}"><i class="fa fa-flask fa-fw"></i>Pacientes</a>
+                    <a href="{{asset('pacientes')}}"><i class="fa fa-flask fa-fw"></i>Pacientes</a>
                 </li>
                 <li>
                     <a href="{{asset('citas')}}"><i class="fa fa-table fa-fw"></i>Citas</a>
                 </li>
+                @if(Auth::user()->profile_type == 'root')
                 <li>
-                    <a href="{{asset('assets/forms.html')}}"><i class="fa fa-edit fa-fw"></i>Administrar personal</a>
+                    <a href="{{asset('register')}}"><i class="fa fa-edit fa-fw"></i>Registrar Personal</a>
                 </li>
+                @endif
 
 
                 <!-- end side-menu -->
@@ -137,6 +140,12 @@
 <!-- Calendar-->
 <script src="{{asset('calendar/js/jquery.plugin.min.js')}}"></script>
 <script src="{{asset('calendar/js/jquery.datepick.js')}}"></script>
+
+
+<!-- DataTables JavaScript -->
+<script src="{{asset('../vendor/datatables/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('../vendor/datatables-plugins/dataTables.bootstrap.min.js')}}"></script>
+<script src="{{asset('../vendor/datatables-responsive/dataTables.responsive.js')}}"></script>
 
 </body>
 

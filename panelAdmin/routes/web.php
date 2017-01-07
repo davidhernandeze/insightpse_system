@@ -13,18 +13,23 @@
 
 Route::get('/', function () {
 
-
-    if(Auth::user()->profile_type == 'professional' || Auth::user()->profile_type == 'root'){
-        return view('index');
-    }
-
-    if(Auth::user()->profile_type == 'admin'){
-        return view('index');
-    }
     return view('index');
+
 })->middleware('auth');
 
 Route::get('citas', 'CalendarController@index')->middleware('auth');
+
+
+Route::get('logout', function(){
+    Auth::logout();
+    return redirect('/');
+})->middleware('auth');
+
+Route::get('pacientes/create', 'PatientController@create');
+Route::get('pacientes', 'PatientController@index');
+Route::get('pacientes/array', 'PatientController@getDataTable');
+Route::post('pacientes/store', 'PatientController@store');
+
 
 
 Auth::routes();
