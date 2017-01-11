@@ -33,7 +33,7 @@ class PatientController extends Controller
 
         $this->validate($request,
             [
-                'names' => 'required|unique:posts|max:255',
+                'names' => 'required|max:255',
                 'surnames' => 'required',
                 'birthday' => 'required',
                 'sex' => 'required',
@@ -62,7 +62,7 @@ class PatientController extends Controller
 
         $patient->save();
 
-        return redirect('/');
+        return redirect('/pacientes');
 
 
     }
@@ -87,7 +87,7 @@ class PatientController extends Controller
 
     public function getDataTable(){
 
-        return Datatables::eloquent(Patient::all())->make(true);
+        return Datatables::of(Patient::all())->make(true);
 
     }
 

@@ -18,6 +18,8 @@ Route::get('/', function () {
 })->middleware('auth');
 
 Route::get('citas', 'CalendarController@index')->middleware('auth');
+Route::get('citas/{date}', 'CalendarController@getData');
+
 
 
 Route::get('logout', function(){
@@ -27,9 +29,9 @@ Route::get('logout', function(){
 
 Route::get('pacientes/create', 'PatientController@create');
 Route::get('pacientes', 'PatientController@index');
+
 Route::get('pacientes/array', 'PatientController@getDataTable');
 Route::post('pacientes/store', 'PatientController@store');
-
 
 
 Auth::routes();

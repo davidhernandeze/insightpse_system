@@ -16,12 +16,16 @@
     <link href="{{asset('css/style.css')}}" rel="stylesheet"/>
     <link href="{{asset('css/main-style.css')}}" rel="stylesheet"/>
 
+    <script type="text/javascript" src="{{asset('DataTables/datatables.min.js')}}"></script>
+
     <!-- Page-Level CSS -->
     <link href="{{asset('plugins/morris/morris-0.4.3.min.css')}}" rel="stylesheet'"/>
 
 
     <!-- calendar plug-in -->
     <link href="{{asset('calendar/css/jquery.datepick.css')}}" rel="stylesheet">
+
+
 
 
 </head>
@@ -143,9 +147,8 @@
 
 
 <!-- DataTables JavaScript -->
-<script src="{{asset('../vendor/datatables/js/jquery.dataTables.min.js')}}"></script>
-<script src="{{asset('../vendor/datatables-plugins/dataTables.bootstrap.min.js')}}"></script>
-<script src="{{asset('../vendor/datatables-responsive/dataTables.responsive.js')}}"></script>
+<script type="text/javascript" src="{{asset('DataTables/datatables.min.js')}}"></script>
+
 
 </body>
 

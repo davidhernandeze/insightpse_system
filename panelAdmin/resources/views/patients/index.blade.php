@@ -1,10 +1,15 @@
 @extends ('layout.master')
 @section ('contenido')
+
+    <!-- DataTables -->
+
+
     <div class="row">
         <h3 class="page-header"> Pacientes registrados</h3>
     </div>
     <div class="row form-group">
-        <input type="button" id="btnNuevo" class="btn btn-primary pull-right" value="Nuevo" data-toggle="tooltip" title="Nuevo dispositivo">
+        <input type="button" id="btnNuevo" class="btn btn-primary pull-right" value="Registrar nuevo paciente"
+               data-toggle="tooltip" title="Registrar Paciente">
     </div>
     <div class="row panel panel-default">
         <div class="panel-heading">
@@ -15,9 +20,12 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Folio</th>
-                    <th>Mac</th>
-                    <th>Status</th>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Fecha de nacimiento</th>
+                    <th>Sexo</th>
+                    <th>Teléfono</th>
+                    <th>Email</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
@@ -34,22 +42,25 @@
 
             $('#btnNuevo').click(function(){
 
-                window.location.href = 'patients/create';
+                window.location.href = 'pacientes/create';
 
             });
 
-            $('#dtDispositivos').DataTable({
+            $('#dtPatients').DataTable({
                 "language":{
                     "url": "js/Spanish.json"
                 },
                 "processing": true,
                 "serverSide": true,
-                "ajax": "/pacientes/array",
+                "ajax": "pacientes/array",
                 "columns": [
-                    {data: 'IdDispositivo'},
-                    {data: 'Folio'},
-                    {data: 'Mac'},
-                    {data: 'Status'}
+                    {data: 'id'},
+                    {data: 'names'},
+                    {data: 'surnames'},
+                    {data: 'birthday'},
+                    {data: 'sex'},
+                    {data: 'tel'},
+                    {data: 'email'},
                 ],
                 "columnDefs": [
                     {
@@ -59,7 +70,7 @@
                     },
 
                     {
-                        "targets": 4,
+                        "targets": 7,
                         "searchable": false,
                         "data": null,
                         "defaultContent": "<button action='edit' type='button' class='btn btn-success btn-xs' title='Editar dispositivo'>" +
@@ -68,7 +79,7 @@
                     },
 
                     {
-                        "targets": 5,
+                        "targets": 8,
                         "searchable": false,
                         "data": null,
                         "defaultContent": "<button action='delete' type='button' class='btn btn-danger btn-xs' " +
