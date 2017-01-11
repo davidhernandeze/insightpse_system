@@ -4,6 +4,7 @@ namespace panelAdmin\Http\Controllers;
 
 use Illuminate\Http\Request;
 use panelAdmin\Calendar;
+use panelAdmin\User;
 use DB;
 
 class CalendarController extends Controller
@@ -14,15 +15,20 @@ class CalendarController extends Controller
 
     }
 
-    public function index($request = null){
+    public function index(){
 
-        return view('calendar.index');
+        $professionals = User::where('profile_type', '=', 'root')
+            ->orWhere('profile_type', '=', 'professional')->get();
+
+
+        return view('calendar.index', ['professionals' => $professionals]);
 
     }
 
-    public function getData($date){
+    public function getData($pro_id, $date){
 
         $appointments = Calendar::where('date', '=', $date)
+            ->where('user_id', '=', $pro_id)
             ->leftJoin('patients', 'calendars.patient_id', '=', 'patients.id')
             ->select(DB::raw('calendars.*, patients.names as names, patients.surnames as surnames'))
             ->get()->toJson();

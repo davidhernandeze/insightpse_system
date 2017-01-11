@@ -18,7 +18,7 @@ Route::get('/', function () {
 })->middleware('auth');
 
 Route::get('citas', 'CalendarController@index')->middleware('auth');
-Route::get('citas/{date}', 'CalendarController@getData');
+Route::get('citas/{pro_id}/{date}', 'CalendarController@getData');
 
 
 

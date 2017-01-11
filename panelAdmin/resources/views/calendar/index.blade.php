@@ -4,7 +4,9 @@
     <div class="row">
         <!-- Page Header -->
         <div class="col-lg-12">
-            <h1 class="page-header">Calendario de citas</h1>
+            <h1 class="page-header">Citas de
+                <b id="professional_name" pro_id="{{Auth::user()->id}}">{{Auth::user()->name}}</b>
+            </h1>
         </div>
     </div>
 
@@ -15,14 +17,28 @@
 
             <div id="inlineDatepicker"></div>
 
+
+            <div class="btn-group">
+                <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    Seleccione profesional
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" id="professionals_dropdown">
+                    @foreach($professionals as $professional)
+                    <li professional_id="{{$professional->id}}"><a href="#">{{$professional->name}}</a></li>
+                        @endforeach
+                </ul>
+            </div>
+
+
         </div>
 
         <div class="col-lg-9">
 
 
-            <h1 class="page-header" id="selectedDay">Citas del hoy</h1>
+            <h3 class="page-header" id="selectedDay">Citas del hoy</h3>
 
-            <div  id="list" style="height: 600px; overflow-y: scroll"> </div>
+            <div id="list" style="height: 600px; overflow-y: scroll"></div>
 
 
         </div>
@@ -32,16 +48,30 @@
 
             $(function () {
 
+                var professional_id = $('#professional_name').attr('pro_id');
                 var today = new Date();
-                refreshAppointments(today);
+                var selected_date = today;
+
+                refreshAppointments(today, professional_id);
+
+                $('#professionals_dropdown').on('click', 'li', function(event){
+
+                    $('#professional_name').text($(this).text());
+
+                    professional_id = $(this).attr('professional_id')
+
+                    $('#inlineDatepicker').datepick('setDate', selected_date);
+
+                });
 
 
                 $('#inlineDatepicker').datepick({
 
                     onSelect: function (dates) {
 
+                        selected_date = new Date(dates);
+
                         var date = new Date(dates);
-                        var today = new Date();
 
                         var weekday = new Array(7);
                         weekday[0] = "Domingo";
@@ -74,21 +104,21 @@
                             $('#selectedDay').text(legend);
                         }
 
-                        refreshAppointments(date);
+                        refreshAppointments(date, professional_id);
 
                     }
                 });
 
             });
 
-            function refreshAppointments(date){
+            function refreshAppointments(date, professional_id) {
 
-                var formated_date = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
+                var formated_date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 
                 $.ajax({
                     dataType: "json",
-                    url: 'citas/'+formated_date,
-                    success: function(data){
+                    url: 'citas/' +professional_id+'/'+ formated_date,
+                    success: function (data) {
 
                         $('#list').empty();
 
@@ -97,14 +127,14 @@
                             '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30',
                             '22:00', '22:30', '23:00'];
 
-                        hoursToShow.forEach(function(hour){
+                        hoursToShow.forEach(function (hour) {
 
-                            var appointment_search = data.filter(function( obj ) {
+                            var appointment_search = data.filter(function (obj) {
 
                                 //reduce the hh:mm:ss format to hh:mm only
                                 var appointmentHour = obj.hour.substring(0, obj.hour.length - 3);
 
-                                if(appointmentHour == hour){
+                                if (appointmentHour == hour) {
 
                                     return obj;
 
@@ -116,30 +146,31 @@
 
                             var appointmentData;
 
-                            if(appointment_search.length != 0){
+                            if (appointment_search.length != 0) {
 
                                 appointmentData =
-                                        '<div class="panel panel-primary">'+
-                                        '<div class="panel-heading">'+
-                                        hour+
-                                        '</div>'+
-                                        '<div class="panel-body">'+
+                                        '<div class="panel panel-primary">' +
+                                        '<div class="panel-heading">' +
+                                        hour +
+                                        '<div>' +
                                         appointment.names + ' ' + appointment.surnames +
-                                        '</div>'+
+                                        '</div>' +
+                                        '</div>' +
                                         '</div>';
 
                             }
-                            else{
+                            else {
 
                                 appointmentData =
-                                        '<div class="panel panel-info">'+
-                                        '<div class="panel-heading">'+
-                                        hour+
-                                        '</div>'+
-                                        '<div class="panel-body">'+
-                                        'Cita disponible para asignación'+
-                                        '</div>'+
+                                        '<div class="panel panel-info">' +
+                                        '<div class="panel-heading">' +
+                                        hour +
+                                        '<div>' +
+                                        '<button class="btn btn-xs btn-success"> Asignar cita</button>' +
+                                        '</div>' +
+                                        '</div>' +
                                         '</div>';
+
 
                             }
 
@@ -150,6 +181,8 @@
                     } // end success function
 
                 }); //end jquery ajax
+
+
 
             }
 
