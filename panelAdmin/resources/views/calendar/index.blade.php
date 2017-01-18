@@ -15,19 +15,22 @@
 
         <div class="col-lg-3">
 
-            <div id="inlineDatepicker"></div>
+            <div class="form-group">
+                <div id="inlineDatepicker"></div>
+            </div>
 
-
-            <div class="btn-group">
-                <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    Seleccione profesional
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" id="professionals_dropdown">
-                    @foreach($professionals as $professional)
-                    <li professional_id="{{$professional->id}}"><a href="#">{{$professional->name}}</a></li>
+            <div class="form-group">
+                <div class="btn-group">
+                    <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Seleccione profesional
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" id="professionals_dropdown">
+                        @foreach($professionals as $professional)
+                            <li professional_id="{{$professional->id}}"><a href="#">{{$professional->name}}</a></li>
                         @endforeach
-                </ul>
+                    </ul>
+                </div>
             </div>
 
 
@@ -42,152 +45,174 @@
 
 
         </div>
+    </div>
 
 
-        <script>
+    <script>
 
-            $(function () {
+        var professional_id;
 
-                var professional_id = $('#professional_name').attr('pro_id');
-                var today = new Date();
-                var selected_date = today;
+        $(function () {
 
-                refreshAppointments(today, professional_id);
+            professional_id = $('#professional_name').attr('pro_id');
+            var today = new Date();
+            var selected_date = today;
 
-                $('#professionals_dropdown').on('click', 'li', function(event){
+            refreshAppointments(today, professional_id);
 
-                    $('#professional_name').text($(this).text());
+            $('#professionals_dropdown').on('click', 'li', function (event) {
 
-                    professional_id = $(this).attr('professional_id')
+                $('#professional_name').text($(this).text());
 
-                    $('#inlineDatepicker').datepick('setDate', selected_date);
+                professional_id = $(this).attr('professional_id')
 
-                });
-
-
-                $('#inlineDatepicker').datepick({
-
-                    onSelect: function (dates) {
-
-                        selected_date = new Date(dates);
-
-                        var date = new Date(dates);
-
-                        var weekday = new Array(7);
-                        weekday[0] = "Domingo";
-                        weekday[1] = "Lunes";
-                        weekday[2] = "Martes";
-                        weekday[3] = "Miércoles";
-                        weekday[4] = "Jueves";
-                        weekday[5] = "Viernes";
-                        weekday[6] = "Sábado";
-
-
-                        var monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-                            "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-                        ];
-                        var month = monthNames[date.getMonth()];
-
-                        var dayOfTheWeek = weekday[date.getDay()];
-                        var dayOfTheMonth = date.getDate();
-
-                        var year = date.getFullYear();
-
-                        var legend = "Citas del " + dayOfTheWeek + " " + dayOfTheMonth + " de " + month + " del " + year;
-                        var formatedDate = $.datepicker.formatDate('dd-mm-yy', date);
-                        var formatedToday = $.datepicker.formatDate('dd-mm-yy', today);
-
-                        if (formatedDate == formatedToday) {
-                            $('#selectedDay').text("Citas de hoy");
-                        }
-                        else {
-                            $('#selectedDay').text(legend);
-                        }
-
-                        refreshAppointments(date, professional_id);
-
-                    }
-                });
+                $('#inlineDatepicker').datepick('setDate', selected_date);
 
             });
 
-            function refreshAppointments(date, professional_id) {
 
-                var formated_date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+            $('#inlineDatepicker').datepick({
 
-                $.ajax({
-                    dataType: "json",
-                    url: 'citas/' +professional_id+'/'+ formated_date,
-                    success: function (data) {
+                onSelect: function (dates) {
 
-                        $('#list').empty();
+                    selected_date = new Date(dates);
 
-                        var hoursToShow = ['08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30',
-                            '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30',
-                            '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30',
-                            '22:00', '22:30', '23:00'];
+                    var date = new Date(dates);
 
-                        hoursToShow.forEach(function (hour) {
+                    var weekday = new Array(7);
+                    weekday[0] = "Domingo";
+                    weekday[1] = "Lunes";
+                    weekday[2] = "Martes";
+                    weekday[3] = "Miércoles";
+                    weekday[4] = "Jueves";
+                    weekday[5] = "Viernes";
+                    weekday[6] = "Sábado";
 
-                            var appointment_search = data.filter(function (obj) {
 
-                                //reduce the hh:mm:ss format to hh:mm only
-                                var appointmentHour = obj.hour.substring(0, obj.hour.length - 3);
+                    var monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+                    ];
+                    var month = monthNames[date.getMonth()];
 
-                                if (appointmentHour == hour) {
+                    var dayOfTheWeek = weekday[date.getDay()];
+                    var dayOfTheMonth = date.getDate();
 
-                                    return obj;
+                    var year = date.getFullYear();
 
-                                }
+                    var legend = "Citas del " + dayOfTheWeek + " " + dayOfTheMonth + " de " + month + " del " + year;
+                    var formatedDate = $.datepicker.formatDate('dd-mm-yy', date);
+                    var formatedToday = $.datepicker.formatDate('dd-mm-yy', today);
 
-                            });
+                    if (formatedDate == formatedToday) {
+                        $('#selectedDay').text("Citas de hoy");
+                    }
+                    else {
+                        $('#selectedDay').text(legend);
+                    }
 
-                            var appointment = appointment_search[0];
+                    refreshAppointments(date, professional_id);
 
-                            var appointmentData;
+                }
+            });
 
-                            if (appointment_search.length != 0) {
 
-                                appointmentData =
-                                        '<div class="panel panel-primary">' +
-                                        '<div class="panel-heading">' +
-                                        hour +
-                                        '<div>' +
-                                        appointment.names + ' ' + appointment.surnames +
-                                        '</div>' +
-                                        '</div>' +
-                                        '</div>';
+        });
+
+        function refreshAppointments(date, professional_id) {
+
+            var formated_date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+
+            $.ajax({
+                dataType: "json",
+                url: 'citas/' + professional_id + '/' + formated_date,
+                success: function (data) {
+
+                    $('#list').empty();
+
+                    var hoursToShow = ['08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30',
+                        '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30',
+                        '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30',
+                        '22:00', '22:30', '23:00'];
+
+                    hoursToShow.forEach(function (hour) {
+
+                        var appointment_search = data.filter(function (obj) {
+
+                            //reduce the hh:mm:ss format to hh:mm only
+                            var appointmentHour = obj.hour.substring(0, obj.hour.length - 3);
+
+                            if (appointmentHour == hour) {
+
+                                return obj;
 
                             }
-                            else {
 
-                                appointmentData =
-                                        '<div class="panel panel-info">' +
-                                        '<div class="panel-heading">' +
-                                        hour +
-                                        '<div>' +
-                                        '<button class="btn btn-xs btn-success"> Asignar cita</button>' +
-                                        '</div>' +
-                                        '</div>' +
-                                        '</div>';
+                        });
+
+                        var appointment = appointment_search[0];
+
+                        var appointmentData;
+
+                        if (appointment_search.length != 0) {
+
+                            appointmentData =
+                                    '<div class="panel panel-primary">' +
+                                    '<div class="panel-heading">' +
+                                    hour +
+                                    '<div>' +
+                                    appointment.names + ' ' + appointment.surnames +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>';
+
+                        }
+                        else {
+
+                            appointmentData =
+                                    '<div class="panel panel-info">' +
+                                    '<div class="panel-heading">' +
+                                    hour +
+                                    '<div>' +
+                                    '<button class="btn btn-xs btn-success btnAssign"' +
+                                    'hour="' + hour + '" ' + 'date="' + formated_date + '"> Asignar cita</button>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>';
 
 
-                            }
+                        }
 
-                            $('#list').append(appointmentData);
+                        $('#list').append(appointmentData);
 
-                        }); //end foreach hours
+                    }); //end foreach hours
 
-                    } // end success function
+                    loadEvents();
 
-                }); //end jquery ajax
+                } // end success function
+
+            }); //end jquery ajax
+
+        }
+
+        function loadEvents(){
+
+            $('.btnAssign').click(function () {
+
+                var hour = $(this).attr('hour');
+                var date = $(this).attr('date');
+
+                console.log('Se asignará en la hora: ' + hour + ' en la fecha: ' + date
+                        + 'al usuario: ' + professional_id);
 
 
+                window.location.href = 'citas/create/?' + 'prof_id='+ professional_id +
+                        '&date=' + date + '&hour='+hour;
+            });
 
-            }
+        }
 
 
-        </script>
+    </script>
 
 
 @endsection
