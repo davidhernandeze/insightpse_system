@@ -27,7 +27,7 @@
                     <th>Teléfono</th>
                     <th>Email</th>
                     <th>Editar</th>
-                    <th>Eliminar</th>
+                    <th>Historia clínica</th>
                 </tr>
                 </thead>
             </table>
@@ -82,29 +82,29 @@
                         "targets": 8,
                         "searchable": false,
                         "data": null,
-                        "defaultContent": "<button action='delete' type='button' class='btn btn-danger btn-xs' " +
+                        "defaultContent": "<button action='open' type='button' class='btn btn-pinterest btn-xs' " +
                         "data-toggle='modal' title='Eliminar dispositivo' data-target='#modal-confirm'>" +
-                        "<span class='glyphicon glyphicon-trash' aria-hidden='true'></span> " +
+                        "<span class='glyphicon glyphicon-folder-open' aria-hidden='true'></span> " +
                         "</button>"
                     }
                 ]
 
             });
 
-            $('#dtDispositivos tbody').on( 'click', 'button', function () {
+            $('#dtPatients tbody').on( 'click', 'button', function () {
 
                 var action = $(this).attr('action');
-                var data = $('#dtDispositivos').DataTable().row( $(this).parents('tr') ).data();
+                var data = $('#dtPatients').DataTable().row( $(this).parents('tr') ).data();
 
                 switch (action){
                     case 'edit':
-                        window.location.href = 'dispositivos/edit/'+data.IdDispositivo;
+                        window.location.href = 'pacientes/edit/'+data.id;
                         break;
 
-                    case 'delete':
-                        $('#btnOkConfirm').on( 'click', function () {
-                            window.location.href = 'dispositivos/delete/' + data.IdDispositivo;
-                        });
+                    case 'open':
+
+                        window.location.href = 'pacientes/show/' + data.id;
+
                         break;
                 }
             } )

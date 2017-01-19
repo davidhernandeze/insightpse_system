@@ -8,6 +8,12 @@
     <!-- jquery -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="{{asset('bootstrap-select/css/bootstrap-select.min.css')}}">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="{{asset('bootstrap-select/js/bootstrap-select.min.js')}}"></script>
+
     <!-- Core CSS - Include with every page -->
     <link href="{{asset('plugins/bootstrap/bootstrap.css')}}" rel="stylesheet"/>
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet"/>

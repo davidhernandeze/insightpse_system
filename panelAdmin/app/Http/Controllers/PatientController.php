@@ -69,6 +69,13 @@ class PatientController extends Controller
 
     public function edit($id){
 
+        $patient = Patient::findOrFail($id);
+
+        $date = date_create($patient->birthday);
+        $formatted_date = $date->format('d-m-Y');
+
+        return view('patients.edit', ['patient' => $patient, 'birthday' => $formatted_date]);
+
 
 
     }
