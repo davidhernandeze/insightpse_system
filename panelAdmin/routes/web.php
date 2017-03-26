@@ -13,15 +13,21 @@
 
 Route::get('/', function () {
 
-
     return view('index');
 
 })->middleware('auth');
 
-Route::get('citas', 'CalendarController@index')->middleware('auth');
+Route::get('citas', 'CalendarController@index');
+
+Route::get('citas/delete/{id}', 'CalendarController@delete');
 Route::get('citas/{pro_id}/{date}', 'CalendarController@getData');
 Route::get('citas/create', 'CalendarController@create');
 Route::post('citas/store', 'CalendarController@store');
+
+Route::get('recepcion/{id}', 'AppointmentController@create');
+Route::get('recepcion/form/{appointment}/{form_type}', 'AppointmentController@newForm');
+Route::get('recepcion/forms/{appointment}', 'AppointmentController@getForms');
+
 
 Route::get('generar', function (){
 
@@ -44,6 +50,7 @@ Route::get('logout', function(){
 Route::get('pacientes/create', 'PatientController@create');
 Route::get('pacientes', 'PatientController@index');
 Route::get('pacientes/edit/{id}', 'PatientController@edit');
+Route::patch('pacientes/update', 'PatientController@update');
 
 Route::get('pacientes/array', 'PatientController@getDataTable');
 Route::post('pacientes/store', 'PatientController@store');

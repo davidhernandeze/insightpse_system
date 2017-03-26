@@ -149,12 +149,23 @@
 
 <!-- Calendar-->
 <script src="{{asset('calendar/js/jquery.plugin.min.js')}}"></script>
-<script src="{{asset('calendar/js/jquery.datepick.js')}}"></script>
+    <script src="{{asset('calendar/js/jquery.datepick.js')}}"></script>
 
 
 <!-- DataTables JavaScript -->
 <script type="text/javascript" src="{{asset('DataTables/datatables.min.js')}}"></script>
 
+
+<script>
+
+    $(document).ready(function(){
+
+
+
+    });
+
+
+</script>
 
 </body>
 

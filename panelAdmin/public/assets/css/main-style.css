@@ -6,6 +6,8 @@ Author: http://binarytheme.com
  Enjoy Our Codes For Free always.
 ======================================*/
 
+
+
 /* user image section */
 .user-section {
     margin-top:20px;
@@ -92,7 +94,7 @@ padding: 20px 15px;
 /* tap nvbar Section */
 
 #navbar {
-    background-color:rgb(83, 163, 163);
+    background-color: rgb(66, 132, 132);
 }
 
 .navbar-brand {
@@ -145,3 +147,4 @@ border-color: #27A6BE;
     
 }
 }
+

@@ -145,3 +145,15 @@ border-color: #27A6BE;
     
 }
 }
+.form-col {
+    width: 80%;
+}
+
+.form-header {
+    background-color: #c2e5ed;
+    text-align: center;
+}
+
+.form-body {
+    background-color: #96acb4;
+}

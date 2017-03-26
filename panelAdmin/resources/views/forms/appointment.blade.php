@@ -1,10 +1,6 @@
 @extends ('layout.master')
 @section ('contenido')
 
-
-
-
-
     <div class="row">
         <h3 class="page-header"> Formulario de registro de cita</h3>
     </div>
@@ -106,8 +102,7 @@
         <div class="form-group">
             <label for="inputEmail" class="col-lg-2 control-label">Motivo de consulta</label>
             <div class="col-lg-10">
-                    <textarea class="form-control" rows="3" name="motivo_consulta"
-                              placeholder="Escriba el motivo de consulta">
+                    <textarea class="form-control" rows="3" name="motivo_consulta">
                         </textarea>
             </div>
         </div>

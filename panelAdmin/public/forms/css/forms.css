@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+*,
+*::before,
+*::after {
+  font-family: 'Open Sans', sans-serif !important;;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+body {
+  background-color: #FAFAFA;
+}
+
+header {
+  color: #183658;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+#icon img {
+  width: 120px;
+  height: 120px;
+}
+
+#main-title h3 {
+  font-weight: bold;
+}
+
+.label-aside {
+  line-height: 2em;
+}
+
+#foot {
+  color: #183658;
+  margin-top: 3em;
+  margin-bottom: 2em;
+}
+
+textarea {
+  resize: none;
+}
+
+#consult-motive {
+  height: 8em;
+}
+
+#records {
+  height: 24em;
+}
+
+#plan, #anotations {
+  height: 16em;
+}
+
+#comments {
+  height: 10em;
+}
+
+#extra-checkbox-text {
+  padding-left: 150px;
+}
+
+/*
+.row {
+  border: 1px solid red;
+}
+
+.column {
+  border: 1px solid blue;
+}
+*/

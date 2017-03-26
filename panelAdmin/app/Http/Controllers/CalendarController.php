@@ -109,9 +109,11 @@ class CalendarController extends Controller
 
     }
 
-    public function destroy($id){
+    public function delete($id){
 
-
+        $appointment = Calendar::findOrFail($id);
+        $appointment->delete();
+        return redirect('citas');
 
     }
 

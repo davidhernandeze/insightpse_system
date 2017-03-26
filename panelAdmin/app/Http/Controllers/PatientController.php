@@ -82,6 +82,40 @@ class PatientController extends Controller
 
     public function update(Request $request){
 
+        $this->validate($request,
+            [
+                'names' => 'required|max:255',
+                'surnames' => 'required',
+                'birthday' => 'required',
+                'sex' => 'required',
+                'tel' => 'required|min:7',
+                'email' => 'required'
+            ],[],
+            [
+                'names' => 'Nombre',
+                'surnames' => 'Apellidos',
+                'birthday' => 'Fecha de nacimiento',
+                'sex' => 'Sexo',
+                'tel' => 'Teléfono',
+                'email' => 'Email'
+
+            ]);
+
+        $patient = Patient::findOrfail($request['id']);
+
+        $patient->names = $request['names'];
+        $patient->surnames = $request['surnames'];
+
+        $birthday = date_create($request['birthday']);
+        $patient->birthday = date_format($birthday, 'Y-m-d');
+
+        $patient->sex = $request['sex'];
+        $patient->tel = $request['tel'];
+        $patient->email = $request['email'];
+
+        $patient->update();
+
+        return redirect('pacientes');
 
 
     }

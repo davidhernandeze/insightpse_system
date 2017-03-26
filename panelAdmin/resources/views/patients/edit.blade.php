@@ -22,9 +22,11 @@
         <fieldset>
             <legend>Ingrese las modificaciones</legend>
 
-            {!!Form::open(array('url' => 'pacientes/store', 'method' => 'POST', 'autocomplete' => 'off',
+            {!!Form::open(array('url' => 'pacientes/update', 'method' => 'PATCH', 'autocomplete' => 'off',
              'data-toggle' => 'validator', 'class' => 'form-horizontal')) !!}
             {{Form::token()}}
+
+            <input type="hidden" value="{{$patient->id}}" name="id">
 
             <div class="form-group">
                 <label for="inputEmail" class="col-lg-2 control-label">Nombre</label>

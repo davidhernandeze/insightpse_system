@@ -2,11 +2,12 @@
 @section ('contenido')
 
     <div class="row">
-        <!-- Page Header -->
+        <!-- Pareceiveer -->
         <div class="col-lg-12">
             <h1 class="page-header">Citas de
                 <b id="professional_name" pro_id="{{Auth::user()->id}}">{{Auth::user()->name}}</b>
             </h1>
+            <input id="input_prof_id" type="hidden" value="{{Auth::user()->id}}">
         </div>
     </div>
 
@@ -33,8 +34,7 @@
                 </div>
             </div>
 
-
-        </div>
+       </div>
 
         <div class="col-lg-9">
 
@@ -116,6 +116,7 @@
             });
 
 
+
         });
 
         function refreshAppointments(date, professional_id) {
@@ -158,7 +159,14 @@
                             appointmentData =
                                     '<div class="panel panel-primary">' +
                                     '<div class="panel-heading">' +
-                                    hour +
+                                    hour + '  '+
+                                    '<div class="btn-group " role="group" aria-label="...">' +
+                                    '<button class="btn btn-xs btn-success btnReceive"' +
+                                    'appoint_id='+appointment.id+'> Recibir paciente' +
+                                    '</button>' +
+                                    '<button class="btn btn-xs btn-danger btnCancel" appoint_id="'+appointment.id+'"> Cancelar cita' +
+                                    '</button>' +
+                                     '</div>'+
                                     '<div>' +
                                     appointment.names + ' ' + appointment.surnames +
                                     '</div>' +
@@ -207,6 +215,22 @@
 
                 window.location.href = 'citas/create/?' + 'prof_id='+ professional_id +
                         '&date=' + date + '&hour='+hour;
+            });
+
+            $('.btnReceive').click(function(){
+
+                var appointmentId = $(this).attr('appoint_id');
+
+                window.location.href = 'recepcion/'+appointmentId;
+
+            });
+
+            $('.btnCancel').click(function(){
+
+                var appoint_id = $(this).attr('appoint_id');
+
+                window.location.href = 'citas/delete/'+appoint_id;
+
             });
 
         }
