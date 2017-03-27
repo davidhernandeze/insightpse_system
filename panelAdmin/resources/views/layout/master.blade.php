@@ -104,7 +104,7 @@
 
                 </li>
                 <li class="selected">
-                    <a href="master.blade.php"><i class="fa fa-dashboard fa-fw"></i>Inicio</a>
+                    <a href="/"><i class="fa fa-dashboard fa-fw"></i>Inicio</a>
                 </li>
 
                 <li>
